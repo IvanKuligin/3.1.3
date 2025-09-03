@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма администратора</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1>Создание / редактирование пользователя</h1>
+
+<form th:action="@{/admin/save}" th:object="${user}" method="post">
+    <!-- ID скрытое поле (для редактирования) -->
+    <input type="hidden" th:field="*{id}" />
+
+    <label for="username">Имя пользователя:</label>
+    <input type="text" id="username" th:field="*{username}" required />
+
+    <label for="password">Пароль:</label>
+    <input type="password" id="password" th:field="*{password}" required />
+
+    <label for="firstName">Имя:</label>
+    <input type="text" id="firstName" th:field="*{firstName}" />
+
+    <label for="lastName">Фамилия:</label>
+    <input type="text" id="lastName" th:field="*{lastName}" />
+
+    <label for="roles">Роли:</label>
+    <select id="roles" th:field="*{roles}" multiple>
+        <option th:each="role : ${allRoles}"
+                th:value="${role}"
+                th:text="${role.name}">Роль</option>
+    </select>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<a href="/admin/dashboard">Назад</a>
+</body>
+</html>
