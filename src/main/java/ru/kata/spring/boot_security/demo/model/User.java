@@ -31,6 +31,9 @@ public class User implements UserDetails {
     @Column(length = 100)
     private String lastName;
 
+    @Column(length = 100)
+    private Integer age;
+
     @Transient
     private Set<Long> roleIds = new HashSet<>();
 
@@ -109,5 +112,13 @@ public class User implements UserDetails {
 
     public Set<Long> getRoleIds() {
         return roleIds;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }
