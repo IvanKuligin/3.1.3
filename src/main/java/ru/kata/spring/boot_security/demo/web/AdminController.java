@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.web;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +9,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,13 +28,21 @@ public class AdminController {
     }
 
     @GetMapping
-    public String adminIndex(Model model) {
+    public String adminIndex(Model model, Principal principal, HttpServletRequest request) {
         List<User> users = userService.findAll();
         List<Role> roles = roleService.findAll();
+        User currentUser = userService.findByUsername(principal.getName()).orElseThrow();
+
+        model.addAttribute("newUser", new User());
         model.addAttribute("users", users);
         model.addAttribute("roles", roles);
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("activePath", request.getRequestURI()); // 👈 безопасно
+
         return "admin";
     }
+
+
 
     @GetMapping("/new")
     public String newUserForm(Model model) {
