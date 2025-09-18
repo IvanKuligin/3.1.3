@@ -27,20 +27,20 @@ public class DataLoader implements CommandLineRunner{
         Role roleUser = roleService.findByName("ROLE_USER").orElseGet(() -> roleService.save(new Role("ROLE_USER")));
         Role roleAdmin = roleService.findByName("ROLE_ADMIN").orElseGet(() -> roleService.save(new Role("ROLE_ADMIN")));
 
-        userService.findByUsername("admin").orElseGet(() -> {
+        userService.findByUsername("admin@mail.ru").orElseGet(() -> {
             User admin = new User();
-            admin.setUsername("admin");
-            admin.setPassword("admin");
+            admin.setUsername("admin@mail.ru");
+            admin.setPassword("1234");
             admin.setFirstName("Admin");
             admin.setLastName("Root");
             admin.setRoles(Set.of(roleAdmin, roleUser));
             return userService.save(admin);
         });
 
-        userService.findByUsername("user").orElseGet(() -> {
+        userService.findByUsername("user@mail.ru").orElseGet(() -> {
             User user = new User();
-            user.setUsername("user");
-            user.setPassword("user");
+            user.setUsername("user@mail.ru");
+            user.setPassword("5678");
             user.setFirstName("Ivan");
             user.setLastName("Userov");
             user.setRoles(Set.of(roleUser));
